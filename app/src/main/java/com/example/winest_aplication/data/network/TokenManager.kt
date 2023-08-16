@@ -8,4 +8,8 @@ class TokenManager(context: Context) {
     var token: String?
         get() = sharedPreferences.getString("token", null)
         set(value) = sharedPreferences.edit().putString("token", value).apply()
+
+    fun clearToken() {
+        sharedPreferences.edit().remove("token").apply()
+    }
 }

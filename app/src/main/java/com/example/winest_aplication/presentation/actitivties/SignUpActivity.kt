@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.winest_aplication.data.model.AuthObjects
 import com.example.winest_aplication.data.network.AuthService
+import com.example.winest_aplication.data.network.TokenManager
 import com.example.winest_aplication.databinding.ActivitySignupBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,31 +26,40 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun registerFlow() = with(binding) {
-        buttonCadastrar.setOnClickListener {
-            val email = editTextEmail.text.toString()
-            val senha = editTextSenha.text.toString()
-            val name = editTextNome.text.toString()
-            val dataDeNascimento = editTextDataNascimento.text.toString()
-            val phone = editTextTelefone.text.toString()
-            CoroutineScope(Dispatchers.IO).launch {
-                val response = authService.register(
-                    AuthObjects.SignUpRequest(
-                        email,
-                        senha,
-                        name,
-                        dataDeNascimento,
-                        phone
+        btnSignUp.setOnClickListener {
+            val email = edtEmailSignUp.text.toString()
+            val senha = edtPasswordSingUp.text.toString()
+            val name = edtFullName.text.toString()
+            val dataDeNascimento = edtBirthdaySignUp.text.toString()
+            val phone = edtPhoneNumberSignUp.text.toString()
+            try {
+                CoroutineScope(Dispatchers.IO).launch {
+                    val response = authService.register(
+                        AuthObjects.SignUpRequest(
+                            email,
+                            senha,
+                            name,
+                            dataDeNascimento,
+                            phone
+                        )
                     )
-                )
-                if (response.isSuccessful) {
-                    val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                    Log.i("APIStatus", "Ok")
-                } else {
-                    Log.e("APIStatus", "Error")
+                    if (response.isSuccessful) {
+                        val responseLogin =
+                            authService.login(AuthObjects.LoginRequest(email, senha))
+                        if (responseLogin.isSuccessful) {
+                            val tokenManager: TokenManager by inject()
+                            tokenManager.token = "${responseLogin.body()?.jwt}"
+                            val intent = Intent(this@SignUpActivity, FeedActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                        Log.i("APIStatus", "Ok")
+                    } else {
+                        Log.e("APIStatus", "Error")
+                    }
                 }
-
+            } catch (e: Exception) {
+                Log.e("APIStatus", "Error")
             }
         }
     }
