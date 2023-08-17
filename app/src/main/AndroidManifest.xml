@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -32,9 +33,9 @@
 
         <activity android:name=".presentation.actitivties.SignUpActivity" />
 
-        <activity android:name=".presentation.actitivties.FeedActivity" />
-
         <activity android:name=".presentation.actitivties.CreatePostActivity"/>
+
+        <activity android:name=".presentation.actitivties.ProfileActivity"/>
 
 
         <provider

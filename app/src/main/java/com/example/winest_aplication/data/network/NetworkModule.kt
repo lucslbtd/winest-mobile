@@ -1,9 +1,6 @@
 package com.example.winest_aplication
 
-import com.example.winest_aplication.data.network.AuthInterceptor
-import com.example.winest_aplication.data.network.AuthService
-import com.example.winest_aplication.data.network.PostService
-import com.example.winest_aplication.data.network.TokenManager
+import com.example.winest_aplication.data.network.*
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -20,12 +17,13 @@ val networkModule = module {
             .build()
 
         Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:3000") // if youre using a physical device, put here your ipv4 instead 10.0.2.2
+            .baseUrl("http://192.168.0.7:3000") // if youre using a physical device, put here your ipv4 instead 10.0.2.2
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
     single { get<Retrofit>().create(PostService::class.java) }
+    single { get<Retrofit>().create(WineService::class.java) }
 }
 
 

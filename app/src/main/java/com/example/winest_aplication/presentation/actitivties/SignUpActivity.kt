@@ -57,7 +57,7 @@ class SignUpActivity : AppCompatActivity() {
                         if (responseLogin.isSuccessful) {
                             val tokenManager: TokenManager by inject()
                             tokenManager.token = "${responseLogin.body()?.jwt}"
-                            val intent = Intent(this@SignUpActivity, FeedActivity::class.java)
+                            val intent = Intent(this@SignUpActivity, MainActivity::class.java)
                             startActivity(intent)
                             finish()
                         }

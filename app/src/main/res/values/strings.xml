@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">winest_aplication</string>
+    <string name="app_name">Winest</string>
     <string name="welcome_to">Welcome to</string>
     <string name="winest">Winest</string>
     <string name="email">Email</string>

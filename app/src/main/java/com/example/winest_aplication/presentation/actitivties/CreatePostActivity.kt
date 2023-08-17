@@ -172,7 +172,7 @@ class CreatePostActivity : AppCompatActivity() {
             val response = apiService.createPost(content, imagePart)
 
             if (response.isSuccessful) {
-                val intent = Intent(applicationContext, FeedActivity::class.java)
+                val intent = Intent(applicationContext, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {

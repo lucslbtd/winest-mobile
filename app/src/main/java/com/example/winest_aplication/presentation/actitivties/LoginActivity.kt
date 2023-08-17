@@ -3,6 +3,7 @@ package com.example.winest_aplication.presentation.actitivties
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract.Data
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -38,12 +40,8 @@ class LoginActivity : AppCompatActivity() {
 
                 if (response.isSuccessful) {
                     tokenManager.token = "${response.body()?.jwt}"
-                    val sharedPreferences =
-                        getSharedPreferences("userInfo", Context.MODE_PRIVATE)
-                    val editor = sharedPreferences.edit()
-                    editor.putString("userName", response.body()?.user?.name)
-                    editor.apply()
-                    startActivity(Intent(this@LoginActivity, FeedActivity::class.java))
+                    saveUserInfo(response)
+                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                     Log.i("APIStatus", "Ok  ${response.body()?.jwt}")
                 } else {
                     Log.e("APIStatus", "Error")
@@ -55,6 +53,18 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun saveUserInfo(responseData: Response<AuthObjects.LoginResponse>){
+        val sharedPreferences =
+            getSharedPreferences("userInfo", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("userName", responseData.body()?.user?.name)
+        editor.putString("userEmail", responseData.body()?.user?.email)
+        editor.putString("userPhone", responseData.body()?.user?.phone)
+        editor.putString("userBirthday", responseData.body()?.user?.birthday)
+        editor.putString("userBio", responseData.body()?.user?.bio)
+        editor.apply()
     }
 
 }
