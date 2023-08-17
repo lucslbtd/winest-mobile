@@ -4,30 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <ImageView
         android:id="@+id/iv_circle_weak"
-        android:layout_width="120dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="324sp"
+        android:layout_height="166sp"
         android:src="@drawable/shape_circle_weak"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="faded_red_circle" />
 
     <ImageView
         android:id="@+id/iv_circle_strong"
-        android:layout_width="100dp"
-        android:layout_height="80dp"
+        android:layout_width="229sp"
+        android:layout_height="195sp"
         android:src="@drawable/shape_circle_strong"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintBottom_toBottomOf="@id/iv_circle_weak"
+        app:layout_constraintStart_toStartOf="@id/iv_circle_weak"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.521"
+        android:contentDescription="red_circle" />
 
     <TextView
         android:id="@+id/tv_welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Welcome to"
+        android:layout_marginTop="24sp"
+        android:text="@string/welcome_to"
+        android:textAppearance="@style/CustomFontMedium"
+        android:textColor="@color/default_gray"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +42,8 @@
         android:id="@+id/tv_winest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Winest"
+        android:text="@string/winest"
+        android:textAppearance="@style/CustomFontBold"
         android:textColor="@color/default_wine"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +54,7 @@
         android:id="@+id/ll_email_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
+        android:layout_marginHorizontal="32sp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +64,8 @@
             android:id="@+id/tv_email_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email"
+            android:text="@string/email"
+            android:textAppearance="@style/CustomFontRegular"
             android:textColor="@color/default_wine"
             android:textSize="18sp" />
 
@@ -67,9 +74,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_field_credentials"
-            android:hint="Email"
+            android:hint="@string/email_hint"
             android:inputType="textEmailAddress"
-            android:padding="12dp"
+            android:padding="12sp"
             app:layout_constraintTop_toBottomOf="@id/tv_email_label" />
 
     </LinearLayout>
@@ -79,8 +86,8 @@
         android:id="@+id/ll_password_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginHorizontal="32sp"
+        android:layout_marginTop="24sp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,7 +97,8 @@
             android:id="@+id/tv_password_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Password"
+            android:text="@string/password"
+            android:textAppearance="@style/CustomFontRegular"
             android:textColor="@color/default_wine"
             android:textSize="18sp" />
 
@@ -99,25 +107,53 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_field_credentials"
-            android:hint="Password"
+            android:hint="@string/password_hint"
             android:inputType="textPassword"
-            android:padding="12dp"
+            android:padding="12sp"
             app:layout_constraintTop_toBottomOf="@id/tv_email_label" />
 
     </LinearLayout>
 
 
-    <CheckBox
-        android:id="@+id/cb_remember_user"
+    <LinearLayout
+        android:id="@+id/ll_remember_forgot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="36dp"
-        android:layout_marginTop="16dp"
-        android:button="@drawable/shape_checkbox_selected"
-        android:padding="12dp"
-        android:text="Remember me"
+        android:layout_marginHorizontal="36sp"
+        android:layout_marginTop="16sp"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_password_field" />
+        app:layout_constraintTop_toBottomOf="@id/ll_password_field">
+
+        <CheckBox
+            android:id="@+id/cb_remember_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/shape_checkbox_unselected"
+            android:padding="12sp" />
+
+        <TextView
+            android:id="@+id/tv_remember_me"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/remember_me"
+            android:textAppearance="@style/CustomFontMedium"
+            android:textSize="16sp"
+            android:textColor="@color/default_gray" />
+
+        <TextView
+            android:id="@+id/tv_forgot_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="50sp"
+            android:text="@string/forgot_password"
+            android:textAppearance="@style/CustomFontSemiBold"
+            android:textSize="16sp"
+            android:textColor="@color/default_wine" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_create_account"
@@ -126,33 +162,36 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cb_remember_user">
+        app:layout_constraintTop_toBottomOf="@id/ll_remember_forgot">
 
         <TextView
             android:id="@+id/tv_dont_have_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dont have account" />
+            android:text="@string/dont_have_an_account" />
 
         <TextView
             android:id="@+id/tv_signUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Sign Up"
+            android:text="@string/sign_up"
             android:textColor="@color/default_wine" />
+
 
     </LinearLayout>
 
     <Button
         android:id="@+id/btn_login"
         android:layout_width="wrap_content"
-        android:layout_height="64dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="36dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16sp"
+        android:layout_marginBottom="36sp"
         android:background="@drawable/shape_default_button"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="Sign In"
+        android:gravity="center"
+        android:text="@string/sign_in"
+        android:textAppearance="@style/CustomFontSemiBold"
+        android:textSize="18sp"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
