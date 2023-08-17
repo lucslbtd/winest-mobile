@@ -18,7 +18,7 @@ interface PostService {
     @POST("/posts")
     suspend fun createPost(
         @Part("content") content: RequestBody,
-        @Part image: MultipartBody.Part
+        @Part image: MultipartBody.Part?
     ): Response<ResponseBody>
 
     @POST("/posts/{id}/like")

@@ -71,6 +71,7 @@ class FeedActivity : AppCompatActivity() {
             } else if (response.code() in 400..402) {
                 val intent = Intent(this@FeedActivity, LoginActivity::class.java)
                 startActivity(intent)
+                finish()
             } else {
                 Log.e("APIStatusFeed", "Error: ${response.code()}")
             }

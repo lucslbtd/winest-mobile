@@ -155,15 +155,18 @@ class CreatePostActivity : AppCompatActivity() {
         val content =
             edtCreatePostDescription.text.toString().toRequestBody("text/plain".toMediaTypeOrNull())
 
-        val file = File(externalCacheDir, "image.png")
-        file.createNewFile()
-        val fos = FileOutputStream(file)
-        picBitmap?.compress(Bitmap.CompressFormat.PNG, 90, fos)
-        fos.flush()
-        fos.close()
+        var imagePart: MultipartBody.Part? = null
 
-        val requestFile = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
-        val imagePart = MultipartBody.Part.createFormData("image", file.name, requestFile)
+        if (picBitmap != null) {
+            val file = File(externalCacheDir, "image.png")
+            file.createNewFile()
+            val fos = FileOutputStream(file)
+            picBitmap?.compress(Bitmap.CompressFormat.PNG, 90, fos)
+            fos.flush()
+            fos.close()
+            val requestFile = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+            imagePart = MultipartBody.Part.createFormData("image", file.name, requestFile)
+        }
 
         CoroutineScope(Dispatchers.IO).launch {
             val response = apiService.createPost(content, imagePart)

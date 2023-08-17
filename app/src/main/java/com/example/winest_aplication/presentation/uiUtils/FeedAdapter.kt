@@ -1,6 +1,7 @@
 package com.example.winest_aplication.presentation.uiUtils
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -43,11 +44,15 @@ class FeedAdapter(
                     }
                 }
             }
-            Glide.with(ivFeedPostImage.context)
-                .load(post.imgSource)
-                .override(350, 350)
-                .centerCrop()
-                .into(ivFeedPostImage)
+            if (post.imgSource != null) {
+                Glide.with(ivFeedPostImage.context)
+                    .load(post.imgSource)
+                    .override(350, 350)
+                    .centerCrop()
+                    .into(ivFeedPostImage)
+            } else {
+                ivFeedPostImage.visibility = View.GONE
+            }
         }
 
         fun likePostChange() = with(binding) {
