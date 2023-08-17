@@ -1,5 +1,6 @@
 package com.example.winest_aplication.presentation.actitivties
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -26,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
         loginFlow()
     }
 
-    private fun loginFlow() = with(binding){
+    private fun loginFlow() = with(binding) {
         btnLogin.setOnClickListener {
             val email = edtEmailLogin.text.toString()
             val password = edtPasswordLogin.text.toString()
@@ -36,6 +37,11 @@ class LoginActivity : AppCompatActivity() {
 
                 if (response.isSuccessful) {
                     tokenManager.token = "${response.body()?.jwt}"
+                    val sharedPreferences =
+                        getSharedPreferences("userInfo", Context.MODE_PRIVATE)
+                    val editor = sharedPreferences.edit()
+                    editor.putString("userName", response.body()?.user?.name)
+                    editor.apply()
                     startActivity(Intent(this@LoginActivity, FeedActivity::class.java))
                     Log.i("APIStatus", "Ok  ${response.body()?.jwt}")
                 } else {
