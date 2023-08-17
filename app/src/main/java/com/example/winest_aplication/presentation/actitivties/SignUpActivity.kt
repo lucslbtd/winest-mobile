@@ -23,6 +23,14 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
         registerFlow()
+        navigateToLogin()
+    }
+
+    private fun navigateToLogin() = with(binding) {
+        tvSignIn.setOnClickListener {
+            val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun registerFlow() = with(binding) {

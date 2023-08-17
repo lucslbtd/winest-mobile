@@ -1,24 +1,66 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
     android:padding="16dp">
 
-    <EditText
-        android:id="@+id/editTextContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Digite o conteúdo do post"
-        android:inputType="textMultiLine" />
-
-    <Button
-        android:id="@+id/buttonSubmitPost"
+    <TextView
+        android:id="@+id/tv_create_post_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:text="Enviar Post" />
+        android:text="Create your post"
+        android:textColor="@color/default_wine"
+        android:textSize="28sp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-</LinearLayout>
+
+    <EditText
+        android:id="@+id/edt_create_post_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="What's on your mind?"
+        android:inputType="textMultiLine"
+        android:minLines="4"
+        android:maxLines="10"
+        android:scrollbars="vertical"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_create_post_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_create_post_add_image"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:text="Add Image"
+        android:src="@drawable/ic_add_pic"
+        app:layout_constraintTop_toBottomOf="@+id/edt_create_post_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_weight="1" />
+
+
+    <ImageView
+        android:id="@+id/iv_create_post_image_preview"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:visibility="gone"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@+id/iv_create_post_add_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btn_create_post_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Send"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toBottomOf="@+id/iv_create_post_image_preview"
+        android:layout_marginHorizontal="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

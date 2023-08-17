@@ -1,20 +1,19 @@
 package com.example.winest_aplication.presentation.actitivties
 
 import android.Manifest
-import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import com.example.winest_aplication.data.network.PostService
 import com.example.winest_aplication.databinding.ActivityCreatePostBinding
 import kotlinx.coroutines.CoroutineScope
@@ -27,7 +26,6 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.koin.android.ext.android.inject
 import java.io.File
 import java.io.FileOutputStream
-import java.text.SimpleDateFormat
 import java.util.*
 
 class CreatePostActivity : AppCompatActivity() {
@@ -43,14 +41,24 @@ class CreatePostActivity : AppCompatActivity() {
 
     private val FILE_PERMISSION = 2
 
+    private val GALLERY_REQUEST = 4
+
+    private var picBitmap: Bitmap? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityCreatePostBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        onClickListeners()
+    }
 
-        binding.buttonSubmitPost.setOnClickListener {
+    private fun onClickListeners() = with(binding) {
+        ivCreatePostAddImage.setOnClickListener {
             selectImage()
+        }
+        btnCreatePostSend.setOnClickListener {
+            createPost()
         }
     }
 
@@ -90,9 +98,10 @@ class CreatePostActivity : AppCompatActivity() {
                     } else {
                         val pickPhoto =
                             Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                        startActivityForResult(pickPhoto, 1)
+                        startActivityForResult(pickPhoto, GALLERY_REQUEST)
                     }
                 }
+
                 options[item] == "Cancelar" -> dialog.dismiss()
             }
         }
@@ -119,38 +128,43 @@ class CreatePostActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
-            if (requestCode == CAMERA_REQUEST) {
-                val bitMapPic: Bitmap = data!!.extras!!.get("data") as Bitmap
-                createPost(bitMapPic)
+            when (requestCode) {
+                CAMERA_REQUEST -> {
+                    picBitmap = resizeImage(data!!.extras!!.get("data") as Bitmap)
+                    binding.ivCreatePostImagePreview.setImageBitmap(picBitmap)
+                    binding.ivCreatePostImagePreview.visibility = View.VISIBLE
+                }
+                GALLERY_REQUEST -> {
+                    val selectedImage = data?.data
+                    val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+                    val cursor =
+                        contentResolver.query(selectedImage!!, filePathColumn, null, null, null)
+                    cursor!!.moveToFirst()
+                    val columnIndex = cursor.getColumnIndex(filePathColumn[0])
+                    val picturePath = cursor.getString(columnIndex)
+                    cursor.close()
+                    picBitmap = resizeImage(BitmapFactory.decodeFile(picturePath))
+                }
             }
-            /*val file = File(Environment.getExternalStorageDirectory().getPath(), "nomeFoto")
-
-            // Uri of camera image
-            imageUri = FileProvider.getUriForFile(
-                this,
-                this.getApplicationContext().getPackageName() + ".provider",
-                file
-            )*/
+            binding.ivCreatePostImagePreview.setImageBitmap(picBitmap)
+            binding.ivCreatePostImagePreview.visibility = View.VISIBLE
         }
     }
 
-    private fun createPost(picBitmap: Bitmap) {
+    private fun createPost() = with(binding) {
         val content =
-            binding.editTextContent.text.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+            edtCreatePostDescription.text.toString().toRequestBody("text/plain".toMediaTypeOrNull())
 
-        // create Image part
-        // Converter o Bitmap em um arquivo temporário
         val file = File(externalCacheDir, "image.png")
         file.createNewFile()
         val fos = FileOutputStream(file)
-        picBitmap.compress(Bitmap.CompressFormat.PNG, 90, fos)
+        picBitmap?.compress(Bitmap.CompressFormat.PNG, 90, fos)
         fos.flush()
         fos.close()
 
         val requestFile = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
         val imagePart = MultipartBody.Part.createFormData("image", file.name, requestFile)
 
-        // launch the coroutine to perform network request
         CoroutineScope(Dispatchers.IO).launch {
             val response = apiService.createPost(content, imagePart)
 
@@ -159,10 +173,22 @@ class CreatePostActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             } else {
-                Log.e("CreatePost", "Error: ${response}")
+                Log.e("CreatePost", "Error: $response")
             }
         }
     }
 
-
+    private fun resizeImage(picBitmal: Bitmap): Bitmap {
+        val scale =
+            (350.toFloat() / picBitmal.width).coerceAtLeast(350.toFloat() / picBitmal.height)
+        val resizedBitmap = Bitmap.createScaledBitmap(
+            picBitmal,
+            (picBitmal.width * scale).toInt(),
+            (picBitmal.height * scale).toInt(),
+            true
+        )
+        val x = (resizedBitmap.width - 350) / 2
+        val y = (resizedBitmap.height - 350) / 2
+        return Bitmap.createBitmap(resizedBitmap, x, y, 350, 350)
+    }
 }

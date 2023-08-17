@@ -1,5 +1,6 @@
 package com.example.winest_aplication.presentation.actitivties
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -36,7 +37,7 @@ class FeedActivity : AppCompatActivity() {
     }
 
     private fun createPost() = with(binding) {
-        newPostButton.setOnClickListener {
+        fabFeedCreatePost.setOnClickListener {
             val intent = Intent(this@FeedActivity, CreatePostActivity::class.java)
             startActivity(intent)
         }
@@ -48,15 +49,41 @@ class FeedActivity : AppCompatActivity() {
 
             if (response.isSuccessful) {
                 val posts = response.body()?.posts
+                val sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE)
+                val userName = sharedPreferences.getString("userName", null)
+
                 runOnUiThread {
-                    postsRecyclerView.adapter = FeedAdapter(posts ?: emptyList())
+                    val adapter =
+                        FeedAdapter(
+                            posts ?: emptyList(),
+                            userName,
+                            object : FeedAdapter.OnLikeClickListener {
+                                override fun onLikeClick(position: Int) {
+                                    val postId = posts?.get(position)?.id
+                                    if (postId != null) {
+                                        likePost(postId)
+                                    }
+                                }
+                            }
+                        )
+                    postsRecyclerView.adapter = adapter
                 }
-                Log.e("APIStatusFeed", "Error: ${response.body()?.posts}")
             } else if (response.code() in 400..402) {
                 val intent = Intent(this@FeedActivity, LoginActivity::class.java)
                 startActivity(intent)
             } else {
                 Log.e("APIStatusFeed", "Error: ${response.code()}")
+            }
+        }
+    }
+
+    private fun likePost(postId: Int) = with(binding) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = apiService.likePost(postId)
+            if (response.isSuccessful) {
+                Log.e("APIStatusLike", "Ok: ${response.code()}")
+            } else {
+                Log.e("APIStatusLike", "Error: ${response.code()}")
             }
         }
     }

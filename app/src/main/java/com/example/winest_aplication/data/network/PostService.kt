@@ -19,6 +19,12 @@ interface PostService {
     suspend fun createPost(
         @Part("content") content: RequestBody,
         @Part image: MultipartBody.Part
-    ): Response<ResponseBody> // substitua ResponseBody pelo tipo de objeto que sua API retorna
+    ): Response<ResponseBody>
+
+    @POST("/posts/{id}/like")
+    suspend fun likePost(@Path("id") id: Int): Response<ResponseBody>
+
+    @POST("/post/{id}/comments")
+    suspend fun commentPost(@Path("id") id: Int, @Body commentRequest: PostsObjects.CommentRequest): Response<ResponseBody>
 
 }
