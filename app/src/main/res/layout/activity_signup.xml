@@ -12,17 +12,17 @@
 
         <ImageView
             android:id="@+id/iv_circle_weak"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_width="120sp"
+            android:layout_height="80sp"
+            android:layout_marginStart="8sp"
             android:src="@drawable/shape_circle_weak"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/iv_circle_strong"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100sp"
+            android:layout_height="80sp"
             android:src="@drawable/shape_circle_strong"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -32,10 +32,11 @@
             android:id="@+id/tv_title_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Let's get started"
+            android:text="@string/lets_get_started"
+            android:textAppearance="@style/CustomFontMedium"
             android:textColor="@color/default_wine"
             android:textSize="28sp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_circle_strong" />
@@ -45,7 +46,7 @@
             android:id="@+id/ll_personal_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="32dp"
+            android:layout_marginHorizontal="32sp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,18 +56,21 @@
                 android:id="@+id/tv_personal_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Personal information"
-                android:textSize="24sp"
+                android:text="@string/personal_information"
+                android:textColor="@color/default_gray"
+                android:textAppearance="@style/CustomFontMedium"
+                android:textSize="22sp"
                 android:layout_gravity="center"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="12sp"
                 />
 
             <TextView
                 android:id="@+id/tv_full_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="Full name"
+                android:layout_marginTop="12sp"
+                android:text="@string/full_name"
+                android:textAppearance="@style/CustomFontRegular"
                 android:textColor="@color/default_wine"
                 android:textSize="18sp" />
 
@@ -75,17 +79,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_field_credentials"
-                android:hint="Enter full name"
+                android:hint="@string/enter_full_name"
                 android:inputType="text"
-                android:padding="12dp"
+                android:padding="12sp"
                 app:layout_constraintTop_toBottomOf="@id/tv_email_label" />
 
             <TextView
                 android:id="@+id/tv_birthday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="Date of birth"
+                android:layout_marginTop="12sp"
+                android:text="@string/date_of_birth"
+                android:textAppearance="@style/CustomFontRegular"
                 android:textColor="@color/default_wine"
                 android:textSize="18sp" />
 
@@ -94,17 +99,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_field_credentials"
-                android:hint="Enter Date of birth"
+                android:hint="@string/enter_date_of_birth"
                 android:inputType="text"
-                android:padding="12dp"
+                android:padding="12sp"
                  />
 
             <TextView
                 android:id="@+id/tv_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="Phone Number"
+                android:layout_marginTop="12sp"
+                android:text="@string/phone_number"
+                android:textAppearance="@style/CustomFontRegular"
                 android:textColor="@color/default_wine"
                 android:textSize="18sp" />
 
@@ -113,9 +119,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_field_credentials"
-                android:hint="Enter Phone number"
-                android:inputType="number"
-                android:padding="12dp"
+                android:hint="@string/enter_phone_number_hint"
+                android:inputType="phone"
+                android:padding="12sp"
                  />
 
         </LinearLayout>
@@ -124,7 +130,7 @@
             android:id="@+id/ll_account_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="32dp"
+            android:layout_marginHorizontal="32sp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -134,18 +140,21 @@
                 android:id="@+id/tv_account_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Account information"
-                android:textSize="24sp"
+                android:text="@string/account_information"
+                android:textColor="@color/default_gray"
+                android:textAppearance="@style/CustomFontMedium"
+                android:textSize="22sp"
                 android:layout_gravity="center"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="12sp"
                 />
 
             <TextView
                 android:id="@+id/tv_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="Username"
+                android:layout_marginTop="12sp"
+                android:text="@string/username"
+                android:textAppearance="@style/CustomFontRegular"
                 android:textColor="@color/default_wine"
                 android:textSize="18sp" />
 
@@ -154,17 +163,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_field_credentials"
-                android:hint="Enter username"
+                android:hint="@string/enter_username"
                 android:inputType="text"
-                android:padding="12dp"
+                android:padding="12sp"
                  />
 
             <TextView
                 android:id="@+id/tv_email_signUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="Email"
+                android:layout_marginTop="12sp"
+                android:text="@string/email"
+                android:textAppearance="@style/CustomFontRegular"
                 android:textColor="@color/default_wine"
                 android:textSize="18sp" />
 
@@ -173,17 +183,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_field_credentials"
-                android:hint="Enter Email"
-                android:inputType="text"
-                android:padding="12dp"
+                android:hint="@string/enter_email"
+                android:inputType="textEmailAddress"
+                android:padding="12sp"
                 />
 
             <TextView
                 android:id="@+id/tv_password_signUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="Password"
+                android:layout_marginTop="12sp"
+                android:text="@string/password"
+                android:textAppearance="@style/CustomFontRegular"
                 android:textColor="@color/default_wine"
                 android:textSize="18sp" />
 
@@ -192,17 +203,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_field_credentials"
-                android:hint="Enter Password"
+                android:hint="@string/enter_password"
                 android:inputType="textPassword"
-                android:padding="12dp"
+                android:padding="12sp"
                 />
 
             <TextView
                 android:id="@+id/tv_confirm_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="Confirm Password"
+                android:layout_marginTop="12sp"
+                android:text="@string/confirm_password"
+                android:textAppearance="@style/CustomFontRegular"
                 android:textColor="@color/default_wine"
                 android:textSize="18sp" />
 
@@ -211,10 +223,53 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_field_credentials"
-                android:hint="Enter Password"
+                android:hint="@string/enter_password"
                 android:inputType="textPassword"
-                android:padding="12dp"
+                android:padding="12sp"
                 />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.08" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.92" />
+
+        <LinearLayout
+            android:id="@+id/ll_accept_terms"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18sp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintTop_toBottomOf="@id/ll_account_info">
+
+            <CheckBox
+                android:id="@+id/cb_agree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/shape_checkbox_unselected"
+                android:padding="12sp" />
+
+            <TextView
+                android:id="@+id/tv_terms_conditions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/terms_of_use_and_privacy_policy"
+                android:textAppearance="@style/CustomFontMedium"
+                android:textSize="16sp"
+                android:textColor="@color/default_gray" />
 
         </LinearLayout>
 
@@ -223,23 +278,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ll_account_info">
+            app:layout_constraintTop_toBottomOf="@id/ll_accept_terms">
 
             <TextView
                 android:id="@+id/tv_already_have_account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Already have an account?" />
+                android:textAppearance="@style/CustomFontMedium"
+                android:textSize="14sp"
+                android:textColor="@color/default_gray"
+                android:text="@string/already_have_an_account" />
 
             <TextView
                 android:id="@+id/tv_signIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Login"
+                android:textAppearance="@style/CustomFontSemiBold"
+                android:textSize="16sp"
+                android:text="@string/login"
                 android:textColor="@color/default_wine" />
 
         </LinearLayout>
@@ -247,12 +307,14 @@
         <Button
             android:id="@+id/btn_signUp"
             android:layout_width="wrap_content"
-            android:layout_height="64dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="36dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16sp"
+            android:layout_marginBottom="36sp"
             android:background="@drawable/shape_default_button"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="Sign Up"
+            android:gravity="center"
+            android:text="@string/sign_up"
+            android:textAppearance="@style/CustomFontSemiBold"
+            android:textSize="18sp"
             android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

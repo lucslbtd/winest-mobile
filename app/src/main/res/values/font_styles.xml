@@ -1,0 +1,19 @@
+<resources>
+<style name="CustomFontRegular">
+    <item name="android:fontFamily">@font/raleway_regular</item>
+</style>
+<style name="CustomFontBold">
+    <item name="android:fontFamily">@font/raleway_bold</item>
+</style>
+<style name="CustomFontThin">
+    <item name="android:fontFamily">@font/raleway_thin</item>
+</style>
+<style name="CustomFontMedium">
+    <item name="android:fontFamily">@font/raleway_medium</item>
+</style>
+    <style name="CustomFontSemiBold">
+        <item name="android:fontFamily">@font/raleway_semi_bold</item>
+    </style>
+<!-- Define more styles as needed -->
+</resources>
+
