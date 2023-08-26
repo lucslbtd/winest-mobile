@@ -169,14 +169,17 @@ class CreatePostActivity : AppCompatActivity() {
         }
 
         CoroutineScope(Dispatchers.IO).launch {
-            val response = apiService.createPost(content, imagePart)
-
-            if (response.isSuccessful) {
-                val intent = Intent(applicationContext, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            } else {
-                Log.e("CreatePost", "Error: $response")
+            try {
+                val response = apiService.createPost(content, imagePart)
+                if (response.isSuccessful) {
+                    val intent = Intent(applicationContext, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Log.e("CreatePost", "Error: $response")
+                }
+            } catch (e: Exception) {
+                Log.e("GRTPromptCatch", "Error: $e")
             }
         }
     }

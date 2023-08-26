@@ -3,9 +3,7 @@ package com.example.winest_aplication.presentation.actitivties
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract.Data
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.winest_aplication.data.model.AuthObjects
 import com.example.winest_aplication.data.network.AuthService
@@ -36,15 +34,19 @@ class LoginActivity : AppCompatActivity() {
             val password = edtPasswordLogin.text.toString()
 
             CoroutineScope(Dispatchers.IO).launch {
-                val response = authService.login(AuthObjects.LoginRequest(email, password))
+                try {
+                    val response = authService.login(AuthObjects.LoginRequest(email, password))
 
-                if (response.isSuccessful) {
-                    tokenManager.token = "${response.body()?.jwt}"
-                    saveUserInfo(response)
-                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                    Log.i("APIStatus", "Ok  ${response.body()?.jwt}")
-                } else {
-                    Log.e("APIStatus", "Error")
+                    if (response.isSuccessful) {
+                        tokenManager.token = "${response.body()?.jwt}"
+                        saveUserInfo(response)
+                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                        Log.i("APIStatus", "Ok  ${response.body()?.jwt}")
+                    } else {
+                        Log.e("APIStatus", "Error")
+                    }
+                } catch (e: Exception) {
+                    Log.e("APIStatus", "Error $e")
                 }
             }
         }
@@ -55,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveUserInfo(responseData: Response<AuthObjects.LoginResponse>){
+    private fun saveUserInfo(responseData: Response<AuthObjects.LoginResponse>) {
         val sharedPreferences =
             getSharedPreferences("userInfo", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
@@ -66,5 +68,4 @@ class LoginActivity : AppCompatActivity() {
         editor.putString("userBio", responseData.body()?.user?.bio)
         editor.apply()
     }
-
 }
