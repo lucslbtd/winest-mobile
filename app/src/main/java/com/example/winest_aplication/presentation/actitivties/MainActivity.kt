@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.winest_aplication.R
 import com.example.winest_aplication.data.network.PostService
 import com.example.winest_aplication.databinding.ActivityMainBinding
+import com.example.winest_aplication.presentation.fragments.FavoriteWinesFragment
 import com.example.winest_aplication.presentation.fragments.FeedFragment
 import com.example.winest_aplication.presentation.fragments.WinesFragment
 import kotlinx.coroutines.CoroutineScope
@@ -47,7 +48,14 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
-                // Add more cases for other menu items if needed
+                R.id.action_favorites -> {
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    val fragment = FavoriteWinesFragment()
+                    fragmentTransaction.replace(R.id.fragmentContainer, fragment)
+                    fragmentTransaction.addToBackStack(null)
+                    fragmentTransaction.commit()
+                    true
+                }
                 else -> false
             }
         }

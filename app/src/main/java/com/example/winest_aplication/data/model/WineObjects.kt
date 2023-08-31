@@ -29,4 +29,13 @@ object WineObjects {
         val content: String
     )
 
+    data class UserFavoriteWines(
+        val favoriteWines: List<FavoriteWines>
+    )
+
+    data class FavoriteWines(
+        val id: Int,
+        val wine: WineResponse
+    )
+
 }
