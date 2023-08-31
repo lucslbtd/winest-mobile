@@ -9,9 +9,9 @@
         android:icon="@drawable/ic_search"
         android:title="Search" />
     <item
-        android:id="@+id/action_notifications"
+        android:id="@+id/action_favorites"
         android:icon="@drawable/ic_heart"
-        android:title="Notifications" />
+        android:title="Favorites" />
     <item
         android:id="@+id/action_profile"
         android:icon="@drawable/ic_user"
