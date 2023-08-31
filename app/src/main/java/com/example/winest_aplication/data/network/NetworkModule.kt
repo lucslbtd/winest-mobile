@@ -23,7 +23,7 @@ val networkModule = module {
             .build()
 
         Retrofit.Builder()
-            .baseUrl("http://192.168.15.4:3000") // if youre using a physical device, put here your ipv4 instead 10.0.2.2
+            .baseUrl("http://localhost:3000") // if youre using a physical device, put here your ipv4 instead 10.0.2.2
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
