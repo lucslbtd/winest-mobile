@@ -24,4 +24,9 @@ object WineObjects {
         val createdAt: String
     )
 
+    data class GPTPrompt(
+        val role: String,
+        val content: String
+    )
+
 }

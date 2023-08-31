@@ -56,46 +56,57 @@ class FeedFragment : Fragment() {
     }
 
     private fun loadFeed() = with(binding) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = apiService.getPosts(0, 20)
+        CoroutineScope(Dispatchers.Main).launch {
+            pgFeed.visibility = View.VISIBLE
+            try {
+                val response = apiService.getPosts(0, 20)
 
-            if (response.isSuccessful) {
-                val posts = response.body()?.posts
-                val sharedPreferences =
-                    requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
-                val userName = sharedPreferences.getString("userName", null)
+                if (response.isSuccessful) {
+                    val posts = response.body()?.posts
+                    val sharedPreferences =
+                        requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE)
+                    val userName = sharedPreferences.getString("userName", null)
 
-                view?.post {
-                    val adapter = FeedAdapter(
-                        posts ?: emptyList(),
-                        userName,
-                        object : FeedAdapter.OnLikeClickListener {
-                            override fun onLikeClick(position: Int) {
-                                val postId = posts?.get(position)?.id
-                                if (postId != null) {
-                                    likePost(postId)
+                    view?.post {
+                        val adapter = FeedAdapter(
+                            posts ?: emptyList(),
+                            userName,
+                            object : FeedAdapter.OnLikeClickListener {
+                                override fun onLikeClick(position: Int) {
+                                    val postId = posts?.get(position)?.id
+                                    if (postId != null) {
+                                        likePost(postId)
+                                    }
                                 }
                             }
-                        }
-                    )
-                    postsRecyclerView.adapter = adapter
+                        )
+                        postsRecyclerView.adapter = adapter
+                    }
+                } else if (response.code() in 400..402) {
+                    val intent = Intent(context, LoginActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Log.e("APIStatusFeed", "Error: ${response.code()}")
                 }
-            } else if (response.code() in 400..402) {
-                val intent = Intent(context, LoginActivity::class.java)
-                startActivity(intent)
-            } else {
-                Log.e("APIStatusFeed", "Error: ${response.code()}")
+            } catch (e: Exception) {
+                Log.e("APIStatusFeed", "Error: $e")
+            } finally {
+                pgFeed.visibility = View.GONE
             }
         }
     }
 
     private fun likePost(postId: Int) = with(binding) {
         CoroutineScope(Dispatchers.IO).launch {
-            val response = apiService.likePost(postId)
-            if (response.isSuccessful) {
-                Log.e("APIStatusLike", "Ok: ${response.code()}")
-            } else {
-                Log.e("APIStatusLike", "Error: ${response.code()}")
+            try {
+                val response = apiService.likePost(postId)
+                if (response.isSuccessful) {
+                    Log.e("APIStatusLike", "Ok: ${response.code()}")
+                } else {
+                    Log.e("APIStatusLike", "Error: ${response.code()}")
+                }
+            } catch (e: Exception) {
+                Log.e("APIStatusLike", "Error: $e")
             }
         }
     }

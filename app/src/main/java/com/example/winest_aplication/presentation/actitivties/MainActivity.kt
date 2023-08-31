@@ -55,19 +55,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun validateConnection() = with(binding) {
         CoroutineScope(Dispatchers.Main).launch {
-            val response = apiService.getPosts(0, 1)
-            if (response.isSuccessful) {
-                val fragmentTransaction = supportFragmentManager.beginTransaction()
-                val fragment = FeedFragment()
-                fragmentTransaction.replace(R.id.fragmentContainer, fragment)
-                fragmentTransaction.addToBackStack(null)
-                fragmentTransaction.commit()
-            } else if (response.code() in 400..402) {
-                val intent = Intent(this@MainActivity, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
-            } else {
-                Log.e("APIStatusFeed", "Error: ${response.code()}")
+            try {
+                val response = apiService.getPosts(0, 1)
+                if (response.isSuccessful) {
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    val fragment = FeedFragment()
+                    fragmentTransaction.replace(R.id.fragmentContainer, fragment)
+                    fragmentTransaction.addToBackStack(null)
+                    fragmentTransaction.commit()
+                } else if (response.code() in 400..402) {
+                    val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Log.e("APIStatusFeed", "Error: ${response.code()}")
+                }
+            } catch (e: Exception) {
+                Log.e("APIStatus", "Error $e")
             }
         }
     }
